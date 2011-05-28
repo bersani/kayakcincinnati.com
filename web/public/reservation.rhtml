@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-US" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="author" content="Gaslight Software LLC" />
+    <meta http-equiv="description" content="Kayak Cincinnati located in Milford, Ohio on the bank of the Little Miami River just minutes from downtown Cincinnati." />
+    <meta http-equiv="keywords" content="reservation, milford, ohio, kayak, family fun, cincinnati, river, little miami, relaxing" />
+    <meta http-equiv="distribution" content="Global" />
+
+    <meta name="resource-type" content="document" />
+    <link rel="stylesheet" href="undohtml.css" type="text/css" />
+    <link rel="stylesheet" href="main.css" type="text/css" />
+
+    <title>Kayak Cincinnati: Reservation Form</title>
+
+    <meta name="author" content="Rob Biedenharn" />
+
+    <script src="prototype.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <!-- <div id="logo"><img src="images/logo.jpg" width="185" height="149" border="0" alt="home" /></div> -->
+    <div id="navigation">
+      <ul>
+        <li><a href="index.html"><span>Home</span></a></li>
+        <li><a href="contact.html"><span>Contact/Directions</span></a></li>
+        <li><a href="hours.html"><span>Hours</span></a></li>
+        <!-- <li><a href="about.html"><span>About Us</span></a></li> -->
+        <li><a href="reservation.rhtml"><span>Reservations</span></a></li>
+        <!-- <li><a href="safety.html"><span>River Safety</span></a></li> -->
+        <!-- <li><a href="helpful.html"><span>Helpful Links</span></a></li> -->
+      </ul>
+    </div>
+
+    <h1 class="center">Kayak Cincinnati</h1>
+
+    <div id="main">
+      <h1>Reservation Request Form</h1>
+
+      <p><strong>NOTE:</strong> All reservations must be made at least
+      24&nbsp;hours in advance.  Reservations are honored on a <em>first-come,
+      first-served</em> basis and are not guaranteed.  Please call during
+      normal business hours if you have questions about capacity.</p>
+
+      <hr />
+      <form name="record" method="post" action="http://kayakcincinnati.com/cgi-bin/FormMail.pl">
+        <input type="hidden" name="recipient" value="m,r" />
+        <input type="hidden" name="text_recipient" value="t" />
+        <input type="hidden" name="subject" value="Kayak Reservation" />
+        <input type="hidden" name="redirect" value="http://kayakcincinnati.com/" />
+        <input type="hidden" name="required" value="email,realname,date,time,trip,kayak,phone" />
+        <input type="hidden" name="env_report" value="HTTP_USER_AGENT" />
+
+        <table summary="Elements of the input form aligned within a table">
+          <colgroup>
+            <col width="20%" align="right" />
+            <col width="80%" align="left" />
+          </colgroup>
+
+          <tr class="required">
+            <td><label for="email">Email Address:</label></td>
+            <td><input name="email" id="email" size="30" maxlength="50" /></td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="realname">Name:</label></td>
+            <td><input name="realname" id="realname" size="30" maxlength="50"/></td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="trip">Trip:</label></td>
+            <td>
+              <select name="trip" id="trip">
+                <option value="remington" selected="selected">Remington Bridge (1.5-3hrs)</option>
+                <option value="isabella">Lake Isabella (3-4hrs)</option>
+                <option value="loveland">Loveland (4-5hrs)</option>
+              </select>
+            </td>
+          </tr>
+% require 'date'
+% start_date = Date.today + 1 ; end_date = start_date
+% end_date = Date.civil(start_date.year, 10, 11)
+% end_date += 1 while end_date.wday != 0
+          <tr class="required">
+            <td><label for="dateField">Date:</label></td>
+            <td>
+              <select name="date" id="dateField">
+% (start_date..end_date).select{|day| day.yday < 290 && [0,5,6].include?(day.wday) }.each do |d|
+                  <option value="<%= d.strftime('%Y-%m-%d-%a') %>"><%= d.strftime('%a %d-%b-%Y') %></option>
+% end
+              </select>
+            </td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="timeField">Time:</label></td>
+            <td>
+              <select name="time" id="timeField">
+% selected='10am'; %w(9am 10am 12\ Noon 2pm ).each do |hr|
+                  <option value="<%= hr %>"<%= ' selected="selected"' if hr == selected %>><%= hr %></option>
+% end
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="address">Address:</label></td>
+            <td>
+              <input name="address" id="address" size="30" maxlength="50"/><br />
+              <label for="city">City:</label>&nbsp;<input name="city" id="city" size="20" maxlength="50"/>
+              <label for="state">State:</label>&nbsp;<input name="state" id="state" size="2" maxlength="5"/>
+
+              <label for="zip">Zip:</label>&nbsp;<input name="zip" id="zip" size="6" maxlength="10"/>
+            </td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="phone">Phone:</label></td>
+            <td><input name="phone" id="phone" size="13" maxlength="20"/></td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="people">People:</label></td>
+            <td>
+              <select name="people" id="people">
+                <option value="0">Select...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option value="lots">more than 10</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td>&nbsp;</td>
+            <td><label for="largegroup">More than 10? How many total:</label>
+              <input name="largegroup" id="largegroup" size="3" maxlength="3"/>
+            </td>
+          </tr>
+
+          <tr class="required">
+            <td><label for="kayak">Kayak:</label></td>
+            <td><input type="checkbox" name="kayak_yn" checked="checked" />
+              <input name="kayak" id="kayak" size="2" maxlength="5" value="1"/></td>
+          </tr>
+
+          <tr>
+            <td><label for="commentField">Comments:</label><br />&nbsp;
+            </td>
+            <td><textarea name="comment" id="commentField" rows="3" cols="50" maxlength="500"></textarea></td>
+          </tr>
+
+          <tr>
+            <td>&nbsp;</td>
+
+            <td>
+              Please <a href="/contact.html">contact us</a> if you have
+              questions that would influence whether you will be able to keep
+              your reservation.<br />  You can save some time if you complete
+              and sign the <a href="/pdf_docs/waiver.pdf" target="_new">waiver
+                form (pdf file)</a>. Bring it with you when you arrive for your
+              trip.
+            </td>
+          </tr>
+
+          <tr>
+            <td><input id="Submit" type="submit" value="Submit" disabled="disabled" /></td>
+            <td><input type="reset" value="Clear Form" /></td>
+          </tr>
+        </table>
+      </form>
+
+      <script type="text/javascript">
+        var field_list = ["email", "realname", "dateField", "timeField",
+                          "address", "city", "state", "zip", "phone", "kayak"];
+        var submit_toggle = function(n) {
+          field_list.each(function(n) {
+            if ($F(n) == "") {
+              $('Submit').disable();
+              throw $break;
+            }
+            else {
+              $('Submit').enable();
+            }
+          });
+        };
+        field_list.each(function (f) { Event.observe($(f), "change", submit_toggle); } );
+        submit_toggle();
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+/* Kayak Cincinnati Site Cascading Style Sheet */
+a:link	  { color: #0000cc; background-color: inherit; text-decoration: underline; }
+a:visited { color: #CC00cc; background-color: inherit; text-decoration: underline; }
+a:active  { color: #030303; background-color: inherit; }
+a:hover	  { color: #0000ff; background-color: inherit; text-decoration: underline; }
+
+html	{ width: 602px;
+  margin: 0px auto;
+}
+body	{
+	background-color: white;
+	color: black;
+	margin: 0px;
+	width: 602px;
+	height: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	}
+abbr,
+acronym,
+.tip	{
+	cursor: help;
+	}
+
+.change	{ border: 3px solid red; font-weight:bold; }
+.new	{
+	border: thin solid red;
+	background-color: rgb(100%, 90%, 90%);
+	margin-bottom: 1em;
+	}
+.hide   { display: none; }
+
+div#logo {
+	position: absolute; top: 10px; left: 0px;
+	width: 148px;
+	height: 137px;
+  	}
+
+div#navigation {
+	width: 100%; margin: 5px auto;
+	height: auto;
+	color: black;
+	font-size: 90%;
+	font-family: inherit;
+	}
+
+div#navigation ul li { display: inline; }
+
+div#navigation a {
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	border-left: 1px solid #EEF;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+        white-space: pre;
+	}
+div#navigation a.first-child {
+  border-left: none;
+}
+
+div#navigation a:link,
+div#navigation a:visited,
+div#navigation a:link:active,
+div#navigation a:visited:active {
+	color: #000;
+	}
+div#navigation :link:hover,
+div#navigation :visited:hover {
+	background-color: #ccc;
+	color: #fff;
+        text-decoration: underline;
+	}
+div#navigation a.dead,
+div#navigation a.dead:link,
+div#navigation a.dead:visited,
+div#navigation a.dead:link:hover,
+div#navigation a.dead:visited:hover {
+	background-color: #888;
+	color: #777;
+	}
+
+#description {
+  font-weight:bolder; letter-spacing:0.1em; text-align: justify;
+}
+div#main {
+	position: relative;
+        margin: 0px auto;
+	clear: both;
+	width: 100%;
+	height: auto;
+  	}
+div#main p { padding-top: 20px; }
+ul {
+  /* margin-left: 35px; */
+}
+li {
+  /*padding-left: 20px;*/
+}
+li.new	{
+  /*text-indent: -20px;*/
+  list-style: circle url('/images/blt_new.gif');
+}
+
+div#main > ul > li  ul          { margin-left: 5px; list-style: circle; }
+div#main > ul > li  ul > li  ul { margin-left: 5px; list-style: square; }
+
+div#reminders { margin-top: 30px; }
+div#reminders ul,
+div#contact ul,
+div#directions ul { margin-left: 20px; list-style: disc; }
+div#directions ul { margin-bottom: 20px; }
+
+.center { text-align: center; }
+.right { float: right; }
+#adobe { width: 50%; margin: 0 auto; }
+.clear { clear: both; }
+
+div#pricing { clear: both; }
+caption { font-size: 120%; }
+tr.odd { background-color: #F7F7F7; }
+
+table { margin: 10px 5px; }
+th { background-color: #E9FA86; }
+#pricing td { text-align: center; }
+
+tr.odd > td.age { background-color: #FDFFE6; }
+td.age { background-color: #FFFFF2; }
+
+td.required label:after { content: " *"; color: red; }
+
+div.links  { display: inherit; }
+.noprint   { display: inherit; }
+.printonly { display: none; }
+
+h1 { color: black; margin-top: 50px; margin-bottom: 15px; }
+h2 { color: black; margin-top: 20px; margin-bottom: 10px; }
+dt { width: 5em; float: left; clear: left; }
+dd { color: black; margin-left: 5em; }
+
+div#hours { width: 476px; }
+#hours dt { width: 10em; float: left; clear: left; }
+#hours dd { margin-left: 10em; }
+#hours p  { margin-left: 3em; font-style: italic; }
+
+.trip       { color: blue; }
+.trip h2    { color: #2020ff; margin-top: 20px; font-size: 125%; }
+.trip h3    { color: black;   margin-top:  5px; font-size: 100%; margin-bottom: 10px; }
+.trip p     { color: black; font-size: 95%; }
+.trip ul    { color: black; }
+.trip li    { color: black; }
+.trip p.departs + ul { list-style: disc; margin-left: 3em; }
+.trip dl    { }
+.trip dt    { width: 5em; float: left; clear: left; }
+.trip dd    { color: black; margin-left: 5em; margin-bottom: 15px;}
+.trip dd ul { }
+
+.earlybird p { font-style: italic; color: black; margin-top: 1em; }
+
+p.look   { color: black; font-size: 110%; }
+p.look a { font-weight: bold; }
+
+div.alcohol   { font-size: 125%; padding-top: 1em; }
+div.alcohol p { padding-top: 1em; }
+div.alcohol > p:first-child { color: #DDC33C; }

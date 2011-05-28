@@ -1,0 +1,27 @@
+#!/bin/bash -p
+# Move all files newer than the 'sentinel' to the web site
+# skip all .doc files (MS-Word)
+# skip all files containing a tilde (~) (local backup or archival copies)
+# skip anything in 'old-notices'
+#
+# Deals with spaces in file/directory names by using the '?' shell wildcard
+
+FTP_host=richardson.joyent.us
+# FTP_host=lovelandcanoe.com    # when DNS is working, this would do
+FTP_user=lovelandcanoe
+FTP_pswd=                  # must be given on keyboard, unless authorized_keys
+FTP_dir=domains/kayakcincinnati.com/web
+
+( find $FTP_dir -type f -newer sentinel.joy ! -name '*.doc' ! -name '*~*' ! -name '.*' |
+   grep -v -e old_stuff |
+   perl -nle '($dir, $file) = m%(.*)/([^/]+)%;
+              $dir =~ s, ,?,g; $file =~ s, ,?,g;
+              print "cd $dir\nlcd $dir";
+              print "!ls -ltr $file";
+              print "put $file";
+              $dir =~ s,[^/]+,..,g;
+              print "cd $dir\nlcd $dir";'
+ echo bye ) | sftp $FTP_user@$FTP_host:web/
+
+mv sentinel.joy sentinel.joy.prev
+touch sentinel.joy

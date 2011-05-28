@@ -1,0 +1,34 @@
+#!/bin/bash -p
+# Move all files newer than the 'sentinel' to the web site
+# skip all .doc files (MS-Word)
+# skip all files containing a tilde (~) (local backup or archival copies)
+# skip anything in 'old-notices'
+#
+# Deals with spaces in file/directory names by using the '?' shell wildcard
+
+FTP_host=ftp.lovelandcanoe.com
+FTP_user=lovelandcanoe.com
+FTP_pswd=paddlehappy            # must be given on keyboard if blank
+FTP_local_dir=public
+FTP_remote_dir=www
+
+(cd web
+( echo user $FTP_user $FTP_pswd
+  echo binary
+  echo epsv4
+  find $FTP_local_dir -type f -newer sentinel ! -name '*.doc' \
+      ! -name '*~*' ! -name '.*' |
+    grep -v -e old_stuff |
+    perl -nle '($dir, $file) = m%(.*)/([^/]+)%;
+              $dir =~ s, ,?,g; $file =~ s, ,?,g;
+	      print "lcd $dir";
+              $dir =~ s,^'$FTP_local_dir','$FTP_remote_dir',;
+	      print "cd $dir";
+              print "!ls -ltr $file";
+	      print "put $file";
+	      $dir =~ s,[^/]+,..,g;
+	      print "cd $dir\nlcd $dir";'
+  echo bye ) | ftp -i -v -n $FTP_host
+)
+mv -f sentinel sentinel.prev
+touch sentinel
